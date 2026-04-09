@@ -1,35 +1,32 @@
-from forward_kinematics import run_forward
-from inverse_kinematics import run_inverse
+from forward_kinematics import animate_robot
+from inverse_kinematics import animate_inverse_robot
 
+def show_menu():
+    print("\n=== 3-Link Robot Simulator ===")
+    print("Silakan pilih mode simulasi:")
+    print("  1 - Forward Kinematics (Gerakan Joint)")
+    print("  2 - Inverse Kinematics (Pelacakan Trajectory)")
+    print("  0 - Keluar Program")
 
-def main_menu():
-    print("\n=== 3-LINK ROBOT SIMULATION SYSTEM ===")
-    print("Pilih mode simulasi:")
-    print("[1] Forward Kinematics (Joint Motion)")
-    print("[2] Inverse Kinematics (Trajectory Tracking)")
-    print("[0] Keluar")
-
-
-def run_simulation():
+def start_simulator():
     while True:
-        main_menu()
-        choice = input("Masukkan pilihan: ").strip()
+        show_menu()
+        user_input = input("Masukkan pilihan Anda: ").strip()
 
-        if choice == "1":
-            print("\nMenjalankan Forward Kinematics...\n")
-            run_forward()
+        if user_input == "1":
+            print("\n>>> Memulai simulasi Forward Kinematics...\n")
+            animate_robot()
 
-        elif choice == "2":
-            print("\nMenjalankan Inverse Kinematics...\n")
-            run_inverse()
+        elif user_input == "2":
+            print("\n>>> Memulai simulasi Inverse Kinematics...\n")
+            animate_inverse_robot()
 
-        elif choice == "0":
-            print("\nProgram selesai.")
+        elif user_input == "0":
+            print("\nTerima kasih! Program ditutup.")
             break
 
         else:
-            print("\n[ERROR] Input tidak valid, coba lagi!\n")
-
+            print("\n[PERINGATAN] Input tidak dikenali, silakan coba lagi.\n")
 
 if __name__ == "__main__":
-    run_simulation()
+    start_simulator()

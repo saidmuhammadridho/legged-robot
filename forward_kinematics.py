@@ -2,104 +2,90 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
-def run_forward():
+def animate_robot():
 
-    # Panjang link
-    L1, L2, L3 = 8, 6, 4
+    # Panjang masing-masing link
+    link_lengths = [8, 6, 4]
 
-    # Waktu
-    t = np.linspace(0, 40, 1200)
+    # Waktu simulasi
+    time = np.linspace(0, 40, 1200)
 
-    # Joint trajectory
-    theta1 = 0.8*np.sin(0.5*t)
-    theta2 = 0.6*np.sin(1.2*t + np.pi/3)
-    theta3 = 0.4*np.cos(1.8*t + np.pi/6)
+    # Gerakan joint baru: kombinasi sin & cos agar lebih kompleks
+    q1 = 0.7*np.sin(0.3*time) + 0.2*np.cos(0.6*time)
+    q2 = 0.5*np.sin(0.8*time + np.pi/4) - 0.1*np.cos(1.5*time)
+    q3 = 0.3*np.cos(1.0*time + np.pi/3) + 0.1*np.sin(2*time)
 
-    # Figure
+    # Setup figure
     fig, ax = plt.subplots(figsize=(7,7))
-
     ax.set_xlim(-20, 20)
     ax.set_ylim(-20, 20)
     ax.set_aspect('equal')
+    ax.set_xlabel("X [units]")
+    ax.set_ylabel("Y [units]")
+    ax.set_title("3-Link Planar Robot - Forward Kinematics (New Motion)")
+    ax.grid(True, linestyle=':', alpha=0.6)
+    ax.axhline(0, color='grey', lw=1)
+    ax.axvline(0, color='grey', lw=1)
 
-    # Axis & grid
-    ax.set_xlabel("X")
-    ax.set_ylabel("Y")
-    ax.set_title("Forward Kinematics - Joint Space Exploration")
-    ax.grid(True, linestyle='--', alpha=0.5)
+    # Workspace area
+    R = sum(link_lengths)
+    circle = plt.Circle((0,0), R, color='orange', alpha=0.1)
+    ax.add_patch(circle)
 
-    # Garis sumbu
-    ax.axhline(0, linewidth=1)
-    ax.axvline(0, linewidth=1)
+    # Plot elements
+    robot_line, = ax.plot([], [], 'b-', lw=3)
+    robot_joints, = ax.plot([], [], 'ro', markersize=5)
+    path_line, = ax.plot([], [], 'g--', lw=1)
 
-    # Workspace
-    r = L1 + L2 + L3
-    theta = np.linspace(0, 2*np.pi, 200)
-    ax.fill(r*np.cos(theta), r*np.sin(theta), alpha=0.1)
-
-    # Robot
-    line, = ax.plot([], [], lw=3)
-    joints, = ax.plot([], [], 'o')
-
-    # Trajectory
-    traj, = ax.plot([], [], lw=1)
-
-    # 🔥 Info di pojok kanan bawah (RELATIVE POSITION)
-    info_text = ax.text(
-        0.98, 0.02, '',
-        transform=ax.transAxes,
-        fontsize=10,
-        color='black',
-        ha='right',
-        va='bottom',
-        bbox=dict(facecolor='white', alpha=0.7)
+    # Info box
+    info_box = ax.text(
+        0.02, 0.98, '', transform=ax.transAxes,
+        fontsize=10, va='top', ha='left',
+        bbox=dict(facecolor='white', alpha=0.8)
     )
 
-    x_hist, y_hist = [], []
+    # Histori end-effector
+    x_path, y_path = [], []
 
-    def update(i):
-        t1 = theta1[i]
-        t2 = theta2[i]
-        t3 = theta3[i]
+    def step(frame):
+        # Ambil sudut saat ini
+        th1, th2, th3 = q1[frame], q2[frame], q3[frame]
 
-        # Forward Kinematics
-        x1 = L1*np.cos(t1)
-        y1 = L1*np.sin(t1)
+        # Forward kinematics
+        x_positions = [0]
+        y_positions = [0]
 
-        x2 = x1 + L2*np.cos(t1+t2)
-        y2 = y1 + L2*np.sin(t1+t2)
+        # Hitung posisi tiap joint
+        x_positions.append(x_positions[-1] + link_lengths[0]*np.cos(th1))
+        y_positions.append(y_positions[-1] + link_lengths[0]*np.sin(th1))
 
-        x3 = x2 + L3*np.cos(t1+t2+t3)
-        y3 = y2 + L3*np.sin(t1+t2+t3)
+        x_positions.append(x_positions[-1] + link_lengths[1]*np.cos(th1+th2))
+        y_positions.append(y_positions[-1] + link_lengths[1]*np.sin(th1+th2))
+
+        x_positions.append(x_positions[-1] + link_lengths[2]*np.cos(th1+th2+th3))
+        y_positions.append(y_positions[-1] + link_lengths[2]*np.sin(th1+th2+th3))
 
         # Update robot
-        line.set_data([0, x1, x2, x3], [0, y1, y2, y3])
-        joints.set_data([0, x1, x2, x3], [0, y1, y2, y3])
+        robot_line.set_data(x_positions, y_positions)
+        robot_joints.set_data(x_positions, y_positions)
 
-        # Trajectory
-        x_hist.append(x3)
-        y_hist.append(y3)
-        traj.set_data(x_hist, y_hist)
+        # Update trajectory
+        x_path.append(x_positions[-1])
+        y_path.append(y_positions[-1])
+        path_line.set_data(x_path, y_path)
 
-        # Info text
-        info = (
-            "=== JOINT ANGLE ===\n"
-            f"θ1 = {np.degrees(t1):6.2f}°\n"
-            f"θ2 = {np.degrees(t2):6.2f}°\n"
-            f"θ3 = {np.degrees(t3):6.2f}°\n\n"
-            "=== END-EFFECTOR ===\n"
-            f"X = {x3:6.2f}\n"
-            f"Y = {y3:6.2f}"
+        # Update info
+        info_text = (
+            f"Joint angles:\nθ1={np.degrees(th1):.1f}°, θ2={np.degrees(th2):.1f}°, θ3={np.degrees(th3):.1f}°\n"
+            f"End-effector:\nX={x_positions[-1]:.2f}, Y={y_positions[-1]:.2f}"
         )
-        info_text.set_text(info)
+        info_box.set_text(info_text)
 
-        return line, joints, traj, info_text
+        return robot_line, robot_joints, path_line, info_box
 
     # Animasi
-    anim = FuncAnimation(fig, update, frames=len(t), interval=25)
-
+    anim = FuncAnimation(fig, step, frames=len(time), interval=25)
     plt.show()
 
-
-# Jalankan
-run_forward()
+# Jalankan animasi
+animate_robot()
