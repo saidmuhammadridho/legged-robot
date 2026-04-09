@@ -1,84 +1,88 @@
-🤖 3-DOF Planar Robot Simulation
+🤖 Simulasi Robot Planar 3-Link (3-DOF)
 
-Forward & Inverse Kinematics Visualization using Python
+Eksperimen Interaktif Forward & Inverse Kinematics dengan Python
 
-📖 Overview
+🌟 Tentang Proyek
 
-This project presents a simulation of a 3 Degrees-of-Freedom (3-DOF) planar robotic arm.
-It is designed to demonstrate the relationship between joint space (angles) and Cartesian space (end-effector position).
+Bayangkan sebuah robot 3-link yang bergerak di bidang 2D.
+Di proyek ini, kita bisa melihat sendi robot bergerak, end-effector mengikuti lintasan, dan target dicapai secara real-time.
 
-The simulation runs in real-time, allowing users to observe how the robot moves and how target positions are achieved through kinematic analysis.
+Proyek ini membantu kamu memahami:
 
-🚀 Key Features
-Real-time animation of a 3-link planar robot
-Forward Kinematics (joint angles → position)
-Inverse Kinematics using geometric approach
-End-effector trajectory visualization
-Target tracking capability
-Error calculation between target and actual position
-📁 Project Structure
-Assignment 2/
+Bagaimana sudut tiap sendi memengaruhi posisi akhir robot
+Bagaimana robot bisa menghitung sendiri sudut yang diperlukan untuk mencapai titik tertentu
+
+Semua simulasi ditampilkan dalam animasi yang interaktif, sehingga belajar robotika jadi lebih seru! 🎉
+
+🚀 Fitur Utama
+🎥 Animasi interaktif robot 3-link
+🔹 Forward Kinematics: hitung posisi end-effector dari sudut joint
+🔹 Inverse Kinematics: hitung sudut joint dari target posisi (menggunakan metode geometri)
+📈 Visualisasi lintasan end-effector secara real-time
+🎯 Target tracking: lihat seberapa akurat robot mengikuti target
+⚡ Evaluasi error posisi otomatis
+📂 Struktur Folder
+legged-robot/
 │
-├── main.py              # Main program (menu system)
-├── forwardk.py         # Forward Kinematics simulation
-├── inversek.py         # Inverse Kinematics simulation
-└── README.md
-▶️ How to Run
-1. Install dependencies
+├── main.py         # Menu interaktif untuk memilih simulasi
+├── forwardk.py     # Modul simulasi Forward Kinematics
+├── inversek.py     # Modul simulasi Inverse Kinematics
+└── README.md       # Dokumentasi proyek
+▶️ Cara Menjalankan
+Install library
 pip install numpy matplotlib
-2. Run the program
+Jalankan program
 python main.py
-3. Select simulation mode
+Pilih mode simulasi
 1 → Forward Kinematics
 2 → Inverse Kinematics
-⚙️ Robot Configuration
+⚙️ Konfigurasi Robot
 
-The robot operates in a 2D plane and consists of three rigid links:
+Robot planar ini memiliki tiga link:
 
-Link	Length
+Link	Panjang
 L1	8
 L2	6
 L3	4
+
+Robot bergerak di bidang 2D, sehingga semua posisi dapat divisualisasikan dalam koordinat X-Y.
+
 📐 Forward Kinematics
 
-Forward Kinematics computes the position of the end-effector based on given joint angles.
+Forward Kinematics (FK) menghitung posisi akhir robot dari sudut-sudut joint.
 
-Each link contributes sequentially to the final position, forming a kinematic chain from the base to the end-effector.
+Posisi setiap link dihitung secara bertahap dari base → end-effector
+Semakin besar sudut joint, semakin besar perubahan posisi end-effector
+Hasil FK divisualisasikan dalam animasi robot bergerak
 
-📐 Inverse Kinematics (Geometric Approach)
+💡 Intuisi: FK menjawab pertanyaan: “Jika aku memutar sendi ini sekian derajat, di mana ujung robot berada?”
 
-Inverse Kinematics determines the joint angles required to reach a specific target position.
+📐 Inverse Kinematics (Pendekatan Geometri)
 
-This implementation uses a geometric approach, which relies on triangle relationships between the robot links.
+Inverse Kinematics (IK) menghitung sudut yang dibutuhkan untuk mencapai target.
 
-Process:
-Compute wrist position (removing the last link contribution)
-Form a triangle using link lengths
-Calculate joint angles using trigonometry
-Adjust the final joint to match orientation
+Metode yang digunakan: geometric approach (berdasarkan segitiga link).
 
-This method is efficient, intuitive, and well-suited for planar robotic systems.
+Langkah-langkah:
+Hitung posisi wrist (pergelangan) dengan mengurangi kontribusi link terakhir
+Bentuk segitiga menggunakan link L1 dan L2
+Gunakan trigonometri untuk mendapatkan sudut joint
+Sesuaikan link terakhir agar end-effector mencapai target dengan orientasi tepat
 
-📊 Error Calculation
+⚡ Kelebihan metode ini: cepat, intuitif, dan stabil untuk robot planar.
 
-To measure tracking performance, position error is defined as:
+📊 Analisis Error
+
+Agar mengetahui akurasi robot, dihitung error posisi:
 
 Error = √((x_target − x_actual)² + (y_target − y_actual)²)
+Error kecil → robot mengikuti lintasan target dengan baik
+Error besar → terjadi deviasi antara target dan posisi aktual
+🧠 Insight
 
-This value indicates how closely the end-effector follows the desired trajectory.
+Dari simulasi ini, kita bisa melihat:
 
-🧠 Insights
-
-From this simulation, we can observe:
-
-The relationship between joint motion and end-effector position
-The reverse mapping solved by inverse kinematics
-The effectiveness of geometric methods for planar robots
-Real-time trajectory tracking behavior
-📌 Notes
-This project is intended for educational purposes
-Suitable for learning basic robotics concepts
-Can be extended to more advanced robotic systems
-📄 License
-
-This project is developed for academic and learning purposes.
+Bagaimana FK memetakan sudut joint → posisi akhir
+Bagaimana IK menyelesaikan masalah sebaliknya: posisi target → sudut joint
+Bagaimana robot mengikuti trajectory target secara real-time
+Pentingnya geometric IK untuk robot planar sederhana
