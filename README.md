@@ -17,6 +17,7 @@ https://github.com/saidmuhammadridho/legged-robot/blob/a0609370c01eeaeac90f3d722
 •	Perhitungan sudut joint otomatis 
 •	Error tracking antara target dan end-effector 
 •	Visualisasi target & jalur pergerakan 
+https://github.com/saidmuhammadridho/legged-robot/blob/5705789e92f1402a37341caca75c1503aeea5583/Inverse.png 
 
 🎮 Interactive Menu
 •	Pilih mode simulasi langsung dari terminal 
