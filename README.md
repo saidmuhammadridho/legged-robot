@@ -42,7 +42,7 @@ ________________________________________
 pip install numpy matplotlib
 2.	Jalankan program: 
 python main.py
-3.	Pilih mode: 
+3.	Pilih mode:
 === 3-Link Robot Simulator ===
 1 - Forward Kinematics
 2 - Inverse Kinematics
