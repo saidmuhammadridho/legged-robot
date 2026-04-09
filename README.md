@@ -10,14 +10,16 @@ Dirancang untuk membantu memahami pergerakan robot, hubungan antar joint, serta 
 •	Trajektori end-effector terlihat jelas 
 •	Workspace robot divisualisasikan 
 •	Informasi sudut dan posisi ditampilkan real-time 
-https://github.com/saidmuhammadridho/legged-robot/blob/a0609370c01eeaeac90f3d722125082b2503161e/Forward.png
+<img src="https://github.com/saidmuhammadridho/legged-robot/blob/a0609370c01eeaeac90f3d722125082b2503161e/Forward.png"
+width="500">
 
 🔴 Inverse Kinematics
 •	Robot mengikuti lintasan target kompleks (spiral + figure-eight) 
 •	Perhitungan sudut joint otomatis 
 •	Error tracking antara target dan end-effector 
 •	Visualisasi target & jalur pergerakan 
-https://github.com/saidmuhammadridho/legged-robot/blob/5705789e92f1402a37341caca75c1503aeea5583/Inverse.png 
+<img src="https://github.com/saidmuhammadridho/legged-robot/blob/5705789e92f1402a37341caca75c1503aeea5583/Inverse.png"
+width="500">
 
 🎮 Interactive Menu
 •	Pilih mode simulasi langsung dari terminal 
