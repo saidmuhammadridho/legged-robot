@@ -30,6 +30,7 @@ ________________________________________
 •	Matplotlib 
 ________________________________________
 📂 Struktur Project
+
 3-link-robot-simulator/
 │
 ├── forward_kinematics.py     # Simulasi FK (gerakan joint)
