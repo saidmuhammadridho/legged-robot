@@ -30,12 +30,15 @@ ________________________________________
 •	Matplotlib 
 ________________________________________
 📂 Struktur Project
-
 3-link-robot-simulator/
 │
+
 ├── forward_kinematics.py     # Simulasi FK (gerakan joint)
+
 ├── inverse_kinematics.py     # Simulasi IK (tracking target)
+
 ├── main.py                   # Menu interaktif
+
 └── README.md
 ________________________________________
 ▶️ Cara Menjalankan
@@ -43,7 +46,7 @@ ________________________________________
 pip install numpy matplotlib
 2.	Jalankan program: 
 python main.py
-3.	Pilih mode:
+3.	Pilih mode: 
 === 3-Link Robot Simulator ===
 1 - Forward Kinematics
 2 - Inverse Kinematics
