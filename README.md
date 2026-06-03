@@ -1,3 +1,5 @@
+ASSIGNMENT 2 
+
 🤖 3-Link Planar Robot Simulator
 Simulasi interaktif robot planar 3-link berbasis Python yang menampilkan konsep Forward Kinematics (FK) dan Inverse Kinematics (IK) secara visual dan real-time.
 Dirancang untuk membantu memahami pergerakan robot, hubungan antar joint, serta bagaimana robot mengikuti trajektori target.
